@@ -1,0 +1,11 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_color.css' %}">
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Boston College TA Application</a></h1>
+{% endblock %}

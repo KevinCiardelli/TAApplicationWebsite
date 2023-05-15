@@ -1,0 +1,153 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+
+    .header {
+        font-family: Times New Roman;
+        background-color:#800000;
+        color: white;
+        content: center;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        text-align: center;
+        padding-top: 0px;
+    }
+    .login-button {
+        font-family: Times New Roman;
+        background-color: #BC9B6A;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 2px solid #fff;
+        text-align: center;
+    }
+    .main-container{
+        font-family: Times New Roman;
+        background-color:white;
+        color: black;
+        content: center;
+        position: absolute;
+        text-align: center;
+        padding-top: 0px;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    table, th, td {
+        border: 0.8px solid black;
+        border-collapse: collapse;
+        color: black;
+        text-align: center;
+        width: 75%;
+        padding: 2px;
+    }
+
+th:nth-child(4), td:nth-child(4) {
+    width: 10%; /* adjust this value to your preference */
+  }
+
+  th:nth-child(5), td:nth-child(5) {
+    width: 10%; /* adjust this value to your preference */
+  }
+  th:nth-child(6), td:nth-child(6) {
+    width: 10%; /* adjust this value to your preference */
+  }
+  .container {
+    background-color:white;
+  }
+  .banner {
+    height: 15vh;
+    width: 100%;
+    font-family: Times New Roman;
+    background-color: #800000;
+    margin: 0 auto;
+    color: white;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 2vh;
+  }
+  .sub-banner {
+    font-size: 10px;
+  }
+  </style >
+  <script>
+    $(document).ready(function() {
+        // Get the current URL using JavaScript
+        var currentUrl = window.location.href;
+
+        // Send the current URL to the server using Ajax
+        $.ajax({
+            type: 'POST',
+            url: '/current_url',
+            data: { url: currentUrl },
+            success: function(response) {
+                console.log('Server response:', response);
+            }
+        });
+    });
+</script>
+  <body>
+        <div class="banner">
+            <h1>BOSTON COLLEGE</h1>
+        <div lass="sub-banner">
+            <h2>TA System</h2>
+        </div>
+      </div>
+
+    <div class="main-container">
+        <br>
+      <form method="POST" class="form-group">
+        <button type="submit"><a href="{{ currentUrl}}/student_landing_page">Home</button></a>
+        <br><br><br>
+        <h4>Course List (student view) </h4>
+        <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+            <thead>
+                <tr>
+                    <th>Course Title</th>
+                    <th>Course ID</th>
+                    <th>Section</th>
+                    <th>Marking Meetings</th>
+                    <th>Lecture Times</th>
+                    <th>Discussion Times</th>
+                    <th>Description</th>
+                    <th>Instructor</th>
+                    <th>Office Hours Per Week</th>
+                    <th>Apply</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in course_list %}
+                    <tr>
+                        {% if course.Status == "Closed" %}
+
+                        {% else %}
+                          <td>{{ course.Course_Name }}</td>
+                          <td>{{ course.Course_ID }}</td>
+                          <td>{{ course.Section }}</td>
+                          <td>{{ course.Marking_Meetings }}</td>
+                          <td>{{ course.Lecture_Times }}</td>
+                          <td>{{ course.Discussion_Times }}</td>
+                          <td>{{ course.Course_Description }}</td>
+                          <td>{{ course.Instructor_Name }}</td>
+                          <td>{{ course.Office_Hours_per_week }}</td>
+                          <th><a href="{% url 'course_app' course.id current_user_id %}"> Apply </a></th>
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}

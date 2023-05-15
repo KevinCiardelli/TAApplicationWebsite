@@ -1,0 +1,209 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Lato:400,300,100,700,900);
+
+    .header {
+        font-family: 'Lato';
+        background-color:#800000;
+        color: white;
+        content: center;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        text-align: center;
+        padding-top: 0px;
+    }
+    .login-button {
+        font-family: 'Lato';
+        background-color: #BC9B6A;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 2px solid #fff;
+        text-align: center;
+    }
+    .main-container{
+        font-family: 'Lato';
+        background-color:white;
+        color: black;
+        content: center;
+        position: absolute;
+        text-align: center;
+        padding-top: 0px;
+    }
+    table, th, td {
+        border: 0.8px solid black;
+        border-collapse: collapse;
+        color: black;
+        text-align: center;
+        width: 75%;
+        padding: 2px;
+    }
+
+th:nth-child(4), td:nth-child(4) {
+    width: 10%; /* adjust this value to your preference */
+  }
+
+  th:nth-child(5), td:nth-child(5) {
+    width: 10%; /* adjust this value to your preference */
+  }
+  th:nth-child(6), td:nth-child(6) {
+    width: 10%; /* adjust this value to your preference */
+  }
+  .container {
+    background-color:white;
+  }
+  .banner {
+    height: 15vh;
+    width: 100%;
+    font-family: 'Lato';
+    background-color: #800000;
+    margin: 0 auto;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 2vh;
+  }
+  .sub-banner {
+    font-size: 20px;
+  }
+  .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #BC9B6A;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #800000;
+}
+  </style >
+  <script>
+    $(document).ready(function() {
+        // Get the current URL using JavaScript
+        var currentUrl = window.location.href;
+
+        // Send the current URL to the server using Ajax
+        $.ajax({
+            type: 'POST',
+            url: '/current_url',
+            data: { url: currentUrl },
+            success: function(response) {
+                console.log('Server response:', response);
+            }
+        });
+    });
+</script>
+  <body>
+        <div class="banner">
+            <h1>BOSTON COLLEGE</h1>
+        <div lass="sub-banner">
+            <h2>TA System</h2>
+        </div>
+      </div>
+
+    <div class="main-container">
+        <br><br><br>
+        <form method="POST" class="form-group">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit"><a href="{{ currentUrl}}/course_creation">Add Course</button></a>
+        <form method="POST" class="form-group">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit"><a href="{{ currentUrl}}/instructor_landing_page">Home</button></a>
+        <br><br><br>
+        <h4>Instructor - Course List</h4>
+        <table class='styled-table' style="border:1px solid black;margin-left:auto;margin-right:auto;">
+            <thead>
+                <tr>
+
+                    <th>Course Name </th>
+                    <th>Course ID</th>
+                    <th>TA positions</th>
+                    <th>View</th>
+                    <th>Edit</th>
+                    <th>Status</th>
+                    <th>Open Course</th>
+                    <th>Close Course</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in course_list %}
+                    <tr>
+
+                        <td>{{ course.Course_Name }}</td>
+                        <td>{{ course.Course_ID }}</td>
+                        <!--<td>{{ course.Instructor_ID }}<td>
+                        </td>{{ course.Section }}</td>
+                        <td>{{ course.Marking_Meetings }}</td>
+                        <td>{{ course.Lecture_Days }}</td>
+                        <td>{{ course.Lecture_Times}}</td>
+                        <td>{{ course.Discussion_Days }}</td>
+                        <td>{{ course.Discussion_Times }}</td>
+                        <td>{{ course.Course_Description }}</td>
+                        <td>{{ course.Instructor }}</td>
+                        <td>{{ course.Office_Hours_per_week }}</td>-->
+                        <td>{{ course.TA_Positions}}</td>
+
+                        <td><form method="POST" class="form-group">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+
+                                <a href="/view_applications/{{ course.Course_Name }} "class="button">
+                                    View Applications
+                                </a>
+
+                        </form></td>
+                        <td><form method="POST" class="form-group">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <a href="/edit_course/{{ course.Course_ID }} "class="button">
+                                Edit
+                            </a>
+                        </form></td>
+
+                        <td>{{ course.Status }}</td>
+
+
+                        <th><a href="{% url 'update_status_field' course.id %}"> Open </a></th>
+                        <th><a href="{% url 'update_status_field' course.id %}"> Close </a></th>
+
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}
