@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+<html>
+  <style>
+
+    .banner {
+      height: 15vh;
+      width: 100%;
+      font-family: Times New Roman; 
+      background-color: #800000;
+      margin: 0 auto;
+      color: white;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 2vh;
+    }
+    .sub-banner {
+      font-size: 10px;
+  }
+  .login-button {
+    font-family: Times New Roman; 
+    background-color: #BC9B6A; 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    text-align: center;
+}
+.buttons {
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+table, th, td {
+    border: 0.8px solid black;
+    border-collapse: collapse;
+    color: black;
+    text-align: center;
+    padding: 2px;
+}  
+
+  </style>
+<head>
+    <title>Welcome</title>
+</head>
+<div class="banner">
+  <h1>BOSTON COLLEGE</h1>
+  <div class="sub-banner">
+      <h2>TA System</h2>
+  </div>
+</div>
+
+<body>
+    <br>
+      <form method="POST" class="form-group">
+        <button type="submit"><a href="{{ currentUrl}}/student_landing_page">Home</button></a>
+    <br>
+    <h1> YOUR APPLICATIONS </h1>
+
+    <div>
+        <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th> Preferred Discussion time 1 </th>
+                    <th> Preferred Discussion time 2 </th>
+                    <th> Status </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in custom_attribute %}
+                    <tr>
+                        <td>{{ application.Course_Name }}</td>
+                        <td>{{ application.Discussion_Time_1 }}</td>
+                        <td>{{ application.Discussion_Time_2 }}</td>
+                        <th><a href="{% url 'view_status' application.Course_Name application.Username application.Application_Status%}">View Status</th>
+                        
+                        
+                    </tr>
+                    {% if application.Application_Status == 'Accepted_by_both' %}
+                      You are hired! All other applications have been closed.
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+</body>
+
+</html>

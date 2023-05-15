@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+{% block title %}Create an Account{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<html>
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* set height of body to full viewport height */
+      }
+    .main-container{
+        font-family: Times New Roman; 
+        background-color:#800000;
+        color: white;
+        content: center;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        text-align: center;
+        padding-top: 50px;
+    }
+    .login-button {
+        font-family: Times New Roman; 
+        background-color: #BC9B6A; 
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 2px solid #fff;
+    }
+
+</style>
+<body>
+
+<div class="main-container">
+    <h1>Boston College </h1>
+    <h2>TA System </h2>
+    <br>
+    <div class="d-flex justify-content-center">
+        <form method="POST" class="form-group">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="login-button">Register!</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

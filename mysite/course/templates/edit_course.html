@@ -1,0 +1,84 @@
+
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+{% block content %}
+
+<html>
+
+<style>
+
+
+  .main-container{
+      font-family: Times New Roman; 
+      content: center;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      text-align: center;
+      padding-top: 120px;
+  }
+
+  .login-button {
+      font-family: Times New Roman; 
+      background-color: #BC9B6A; 
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 2px solid #fff;
+      text-align: center;
+	  
+
+  }
+  .banner {
+    height: 15vh;
+    width: 100%;
+    font-family: Times New Roman; 
+    background-color: #800000;
+    margin: 0 auto;
+    color: white;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 2vh;
+  }
+  .sub-banner {
+    font-size: 10px;
+}
+</style >
+
+  <head>
+    <title>Welcome</title>
+  </head>
+  <body>
+    
+    <div class="banner">
+      <h1>BOSTON COLLEGE</h1>
+      <div lass="sub-banner">
+          <h2>TA System</h2>
+      </div>
+    </div>
+    <div class = "main-container">
+      <br>
+      <form method="POST" class="form-group">
+        <button type="submit"><a href="{{ currentUrl}}/instructor_landing_page">Home</button></a>
+    <br>
+      <h4>Edit Course</h4>
+        <form method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input class="login-button" type='submit', value='Save'/>
+        </form>
+    </div>
+  </body>
+</html>
+{% endblock %}

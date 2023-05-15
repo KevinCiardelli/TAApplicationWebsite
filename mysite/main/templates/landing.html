@@ -1,0 +1,65 @@
+<!-- templates/landing.html -->
+
+<!DOCTYPE html>
+<html>
+    <style>
+        .main-container{
+            font-family: Times New Roman; 
+            background-color:#800000;
+            color: white;
+            content: center;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .login-button {
+            font-family: Times New Roman; 
+            background-color: #BC9B6A; 
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 2px solid #fff;
+            text-align: center;
+        }
+    
+    </style>
+<body>
+    <div class="main-container">
+    <script>
+		$(document).ready(function() {
+			// Get the current URL using JavaScript
+			var currentUrl = window.location.href;
+
+			// Send the current URL to the server using Ajax
+			$.ajax({
+				type: 'POST',
+				url: '/current_url',
+				data: { url: currentUrl },
+				success: function(response) {
+					console.log('Server response:', response);
+				}
+			});
+		});
+	</script>
+    <h1>BOSTON COLLEGE</h1>
+    <h2>TA System</h2>
+
+    <br><br><br><br>
+    <div>
+	    <a href="{{ currentUrl}}/login"><button class="login-button">Login</button></a>
+    </div>
+    <br><br>
+    <div>
+	    <a href="{{ currentUrl}}/register"><button class="login-button">Create an Account</button></a>
+    </div>
+</div>
+</body>
+</html>

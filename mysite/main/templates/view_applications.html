@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<html>
+  <style>
+
+    .banner {
+      height: 15vh;
+      width: 100%;
+      font-family: Times New Roman;
+      background-color: #800000;
+      margin: 0 auto;
+      color: white;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 2vh;
+    }
+    .sub-banner {
+      font-size: 10px;
+  }
+  .login-button {
+    font-family: Times New Roman;
+    background-color: #BC9B6A;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    text-align: center;
+}
+.accept-button {
+  font-family: Times New Roman;
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #fff;
+  text-align: center;
+}
+.reject-button {
+  font-family: Times New Roman;
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #fff;
+  text-align: center;
+}
+.buttons {
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+table, th, td {
+    border: 0.8px solid black;
+    border-collapse: collapse;
+    color: black;
+    text-align: center;
+    padding: 2px;
+}
+
+  </style>
+
+  <script>
+    function sendRequest(button) {
+      button.innerHTML = "Request Sent";
+      button.disabled = true;
+      button.style.backgroundColor = "#CCCCCC"; // change color to grey
+      alert("Request sent successfully!")
+    }
+    </script>
+<head>
+    <title>Welcome</title>
+</head>
+<div class="banner">
+  <h1>BOSTON COLLEGE</h1>
+  <div class="sub-banner">
+      <h2>TA System</h2>
+  </div>
+</div>
+<br>
+<button type="submit"><a href="{{ currentUrl}}/instructor_landing_page">Home</a></button>
+<br><br><br>
+<button type="submit"><a href="{{ currentUrl}}/view_courses_instructor">View Courses</a></button>
+<body>
+    <br>
+    <br>
+    <h1> APPLICATIONS </h1>
+
+    <div>
+        <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th> Preferred Discussion time 1 </th>
+                    <th> Preferred Discussion time 2 </th>
+                    <th> Resume </th>
+                    <th> Extra Info </th>
+                    <th> Status </th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for application in custom_attribute %}
+                <tr>
+
+                  <td>{{ application.First_and_Last_Name }}</td>
+                  <td>{{ application.Discussion_Time_1 }}</td>
+                  <td>{{ application.Discussion_Time_2 }}</td>
+                  <td><a href="{{ application.Resume.url }}">Open</a></td>
+                  <td>{{ application.Anything_you_want_to_add }}</td>
+                  {% if application.Application_Status == "Accepted_by_both" %}
+                    <td>Accepted</td>
+                  {% elif application.Application_Status == "Rejected" %}
+                    <td>Rejected</td>
+                 {% else %}
+                    <td>
+                        <a href="{% url 'update_application_status_accept' application.Username application.Course_Name %}">
+                          Accept
+                        </a>
+                        <a href="{% url 'update_application_status_reject' application.Username application.Course_Name %}">
+                          Reject
+                        </a>
+                    <td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+</body>
+
+</html>
+{% endblock %}

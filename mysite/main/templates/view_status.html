@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+<html>
+  <style>
+
+    .banner {
+      height: 15vh;
+      width: 100%;
+      font-family: Times New Roman;
+      background-color: #800000;
+      margin: 0 auto;
+      color: white;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 2vh;
+    }
+    .sub-banner {
+      font-size: 10px;
+  }
+  .login-button {
+    font-family: Times New Roman;
+    background-color: #BC9B6A;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    text-align: center;
+}
+.buttons {
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+table, th, td {
+    border: 0.8px solid black;
+    border-collapse: collapse;
+    color: black;
+    text-align: center;
+    padding: 2px;
+}
+.accept-button {
+  font-family: Times New Roman;
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #fff;
+  text-align: center;
+}
+.reject-button {
+  font-family: Times New Roman;
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #fff;
+  text-align: center;
+}
+
+</style>
+
+<script>
+  function sendRequest(button) {
+    if (button.status == "accept") {
+      button.innerHTML = "Accepted";
+    } else if (button.status == "reject") {
+      button.innerHTML = "Rejected";
+    }
+    button.disabled = true;
+    button.style.backgroundColor = "#CCCCCC"; // change color to grey
+  }
+</script>
+
+<head>
+    <title>Welcome</title>
+</head>
+<div class="banner">
+  <h1>BOSTON COLLEGE</h1>
+  <div class="sub-banner">
+      <h2>TA System</h2>
+  </div>
+</div>
+<div style="padding: 10px;">
+  <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
+      <a href="{{ currentUrl }}/student_landing_page" style="text-decoration: none; color: white;">Home</a>
+  </button>
+</div>
+
+<body>
+  <br>
+  <h1 style="text-align: center;">Application Status for {{ custom_attribute.course }}</h1>
+  <br>
+
+  {% if custom_attribute.application_status == "Pending" %}
+      <div style="text-align: center;background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+        {{ custom_attribute.application_status }}
+      </div>
+  {% endif %}
+
+  {% if custom_attribute.application_status == "Rejected" %}
+      <div style="text-align: center;background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+        {{ custom_attribute.application_status }}
+      </div>
+  {% endif %}
+
+  {% if custom_attribute.application_status == "Accepted_by_both" %}
+      <div style="text-align: center;background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+        You are positioned for this course!
+      </div>
+  {% endif %}
+
+
+  {% if custom_attribute.application_status == "Accepted" %}
+      <div style="text-align: center;background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+          {{ custom_attribute.application_status }}
+      </div>
+      <div style="text-align: center;background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+          <a href="{% url 'update_hire_status_accepted' custom_attribute.student custom_attribute.course %}">
+              Accept
+          </a>
+      </div>
+      <div style="text-align: center;background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+          <a href="{% url 'update_hire_status_rejected' custom_attribute.student custom_attribute.course %}">
+              Reject
+          </a>
+      </div>
+
+
+  {% endif %}
+  <br>
+
+
+</body>
+
+</html>

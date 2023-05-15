@@ -1,0 +1,84 @@
+/* Boston College color scheme */
+:root {
+    --bc-maroon: #881F4C;
+    --bc-gold: #FDB813;
+    --bc-grey: #8F8F8C;
+    --bc-white: #ffffff;
+  }
+  
+  /* Font styles */
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Georgia", serif;
+    font-weight: bold;
+  }
+  
+  h1 {
+    font-size: 36px;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h3 {
+    font-size: 24px;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navigation bar */
+  nav {
+    background-color: var(--bc-maroon);
+    color: var(--bc-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0 30px;
+  }
+  
+  nav a {
+    color: var(--bc-white);
+    font-size: 20px;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Buttons */
+  .button {
+    background-color: var(--bc-gold);
+    color: var(--bc-maroon);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #ffcf5c;
+  }
+  

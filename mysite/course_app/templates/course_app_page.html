@@ -1,0 +1,89 @@
+{% extends "main/base.html" %}
+{% block title %}Boston College{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<html>
+<style>
+  body {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-container{
+      font-family: Times New Roman;
+      text-align: left;
+      justify-content: center;
+      align-items: center;
+      padding-left: 20px;
+
+  }
+  .banner {
+    height: 15vh;
+    width: 100%;
+    font-family: Times New Roman;
+    background-color: #800000;
+    margin: 0 auto;
+    color: white;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2vh;
+    text-align: left;
+  }
+  .sub-banner {
+    font-size: 10px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+</style>
+
+
+<body>
+  <div class="banner">
+    <h1>BOSTON COLLEGE</h1>
+    <div class="sub-banner">
+        <h2>TA System</h2>
+    </div>
+  </div>
+<div class="main-container">
+  <br>
+  <button type="submit"><a href="{{ currentUrl}}/student_landing_page">Home</button></a>
+        
+    <br>
+      <div>
+          <h2>{{course.Course_Name}}</h2>
+          <h2>{{course.Course_ID}}.{{course.Section}}</h2>
+          <p>{{ course.Course_Description }}</p>
+          {% if course.Marking_Meetings != '0' %}
+            <p>Amount of Marking Meetings: {{course.Marking_Meetings}}</p>
+          {% endif %}
+          <form method="POST" enctype="multipart/form-data" class="form-group" >
+            {% csrf_token %}
+        	  {% for item in form %}
+              <div class="fieldWrapper">
+                  {{ item.label }} {{ item }}
+                  {% if item.help_text %}
+                      {{ item.help_text|safe }}
+                  {% endif %}
+              </div>
+              <br>
+            {% endfor %}
+            <input type="hidden" name="Course_Name" value="{{ course.Course_Name }}">
+            <input type="hidden" name="Course_Section" value="{{ course.Section }}">
+            <input type="hidden" name="Username" value="{{ Username }}">
+            <button type="submit">Apply</button>
+          </form>
+
+      </div>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

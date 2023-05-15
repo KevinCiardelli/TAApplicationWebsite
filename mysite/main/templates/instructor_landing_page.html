@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Lato:400,300,100,700,900);
+    
+    h1,
+    h2,
+    p,
+    g,
+    a{
+      margin: 5px;
+      padding: 2.5px;
+      font-family: 'Lato';
+    }
+    
+    h1 {
+      font-size: 3em;
+      padding: 10px 0;
+      font-weight: 800;
+    }
+    
+    h2 {
+      font-size: 1.6em;
+      padding: 1px 0;
+      font-weight: 300;
+    }
+    
+    p {
+      font-size: 3em;
+      font-weight: 100;
+      letter-spacing: 5px;
+    }
+    
+    g {
+      font-size: 2.2em;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+    
+    .header {
+      width: 100%;
+      padding:40px 0;
+      text-align: center;
+      background: #800000;
+      color: white;
+    }
+    
+    
+    .btn-bgstroke {
+      font-size: 20px;
+      display: inline-block;
+      border: 1px solid white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 300;
+      margin-top: 20px; 
+    }
+    
+    .btn-bgstroke:hover {
+      background-color: white;
+      color: #800000;
+    }
+    
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 30vh;
+      width: 100%;
+    }
+    
+    .body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #BC9B6A;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+    }
+      .login-button {
+        font-family: Lato; 
+        background-color: #BC9B6A; 
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 2px solid #fff;
+        text-align: center;
+        outline: #800000;
+        margin-bottom: 1px;
+    
+    
+    }
+    button {
+          background-color: #BC9B6A;
+          border: none;
+          color: #FFFFFF;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 10px;
+          cursor: pointer;
+          border-radius: 5px;
+          box-shadow: 2px 2px #CCCCCC;
+          transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+          background-color: #FFFFFF;
+          color: #000000;
+          box-shadow: 2px 2px #800000;
+        }
+    
+        .bordered {
+      border: 2px solid #BC9B6A;
+      border-radius: 10px;
+      padding: 10px 20px 20px 20px;
+    }
+    body{background-color: lightgrey;}
+      </style>
+<section class="header">
+  <h1>BOSTON COLLEGE</h1>
+  <p>TA System</p>
+</section>
+<script>
+  $(document).ready(function() {
+      // Get the current URL using JavaScript
+      var currentUrl = window.location.href;
+
+      // Send the current URL to the server using Ajax
+      $.ajax({
+          type: 'POST',
+          url: '/current_url',
+          data: { url: currentUrl },
+          success: function(response) {
+              console.log('Server response:', response);
+          }
+      });
+  });
+</script>
+<body class="bordered">
+    <g> INSTRUCTOR DASHBOARD </g>
+    <h2>Welcome, {{ user.username }}!</h2>
+    <div class="buttons">
+	    <a href="{{ currentUrl}}/course_creation"><button class="login-button">Create a Course</button></a>
+    </div>
+    <div class="buttons">
+	    <a href="{{ currentUrl}}/view_courses_instructor"><button class="login-button">View Courses</button></a>
+    </div>
+    <div class="buttons">
+	    <a href="{{ currentUrl}}/logout"><button class="login-button">Logout</button></a>
+    </div>
+</body>
+
+</html>
